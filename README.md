@@ -1,6 +1,8 @@
 # blog-symfony
 Blog app with Symfony and Docker. Made to learn.
 
+<!-- implentation de fixtures and fakerPHP -->
+- Integration of [DoctrineFixturesBundle](https://symfony.com/bundles/DoctrineFixturesBundle/current/index.html) and [FakePHP](https://fakerphp.github.io/) for generating false test data.
 
 
 *Developpement in progress ...*
