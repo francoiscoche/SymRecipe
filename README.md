@@ -9,4 +9,7 @@ Blog app with Symfony and Docker. Made to learn.
 ### Author
 
 From a tuto by [@Emilien.Gts](https://gitlab.com/Emilien.Gts)
+
 Adapted by [@francoiscoche](https://github.com/francoiscoche)
+
+https://youtu.be/3K6oBiQK8aA
