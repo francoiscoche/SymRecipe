@@ -3,6 +3,7 @@ Blog app with Symfony and Docker. Made to learn.
 
 <!-- implentation de fixtures and fakerPHP -->
 - Integration of [DoctrineFixturesBundle](https://symfony.com/bundles/DoctrineFixturesBundle/current/index.html) and [FakePHP](https://fakerphp.github.io/) for generating false test data.
+- Integration of [KnpPaginatorBundle](https://github.com/KnpLabs/KnpPaginatorBundle) to use a pagination system.
 
 
 *Developpement in progress ...*
