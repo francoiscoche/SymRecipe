@@ -5,11 +5,14 @@ namespace App\DataFixtures;
 use Faker\Factory;
 use App\Entity\Ingredient;
 use App\Entity\Recette;
+use App\Entity\User;
 use Doctrine\Persistence\ObjectManager;
 use Doctrine\Bundle\FixturesBundle\Fixture;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class AppFixtures extends Fixture
 {
+
     public function load(ObjectManager $manager): void
     {
         // $product = new Product();
@@ -46,7 +49,19 @@ class AppFixtures extends Fixture
             $manager->persist($recipe);
         }
 
+        // Users
 
+        for ($k=0; $k < 10 ; $k++) {
+            $user = new User();
+            $user->setFullName($faker->name())
+                // ->setPseudo(mt_rand(0,1) === 1 ? $faker->firstName() : null)
+                ->setPseudo($faker->firstName())
+                ->setEmail($faker->email())
+                ->setRoles(['ROLE_USER'])
+                ->setPlainPassword('password');
+
+            $manager->persist($user);
+        }
         $manager->flush();
     }
 }
