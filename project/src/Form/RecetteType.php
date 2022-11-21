@@ -41,8 +41,9 @@ class RecetteType extends AbstractType
                 'attr' => [
                     'class' => 'form-control',
                     'min' => 1,
-                    'max' => 1440
+                    'max' => 1440,
                 ],
+                'required' => false,
                 'label' => 'Temps estimé (en minutes) pour réalisé',
                 'label_attr' => [
                     'class' => 'form-label mt-4'
