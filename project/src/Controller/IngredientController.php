@@ -27,7 +27,7 @@ class IngredientController extends AbstractController
     #[Route('/ingredient', name: 'app_ingredient', methods: ['GET'])]
     public function index(IngredientRepository $repository, PaginatorInterface $paginator, Request $request): Response
     {
-        $query = $repository->findAll();
+        $query = $repository->findBy(['user' => $this->getUser()]);
 
         $ingredients = $paginator->paginate(
             $query, /* query NOT result */
@@ -56,6 +56,7 @@ class IngredientController extends AbstractController
 
         if($form->isSubmitted() && $form->isValid()) {
             $ingredient = $form->getData();
+            $ingredient->setUser($this->getUser());
             $manager->persist($ingredient);
             $manager->flush();
 

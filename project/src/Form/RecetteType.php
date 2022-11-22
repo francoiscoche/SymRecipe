@@ -16,9 +16,18 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 class RecetteType extends AbstractType
 {
+
+    private $token;
+
+    public function __construct(TokenStorageInterface $token)
+    {
+        $this->token = $token;
+    }
+
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
@@ -121,6 +130,8 @@ class RecetteType extends AbstractType
                 'class' => Ingredient::class,
                 'query_builder' => function(IngredientRepository $r) {
                     return $r->createQueryBuilder('i')
+                        ->where('i.user = :user')
+                        ->setParameter('user', $this->token->getToken()->getUser())
                         ->orderBy('i.name', 'ASC');
                 },
                 'choice_label' => 'name',

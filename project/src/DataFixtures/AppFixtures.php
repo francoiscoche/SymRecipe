@@ -21,12 +21,29 @@ class AppFixtures extends Fixture
 
         $faker = Factory::create('fr_FR');
         $ingredients = [];
+        $users = [];
+
+        // Users
+        for ($k=0; $k < 10 ; $k++) {
+            $user = new User();
+            $user->setFullName($faker->name())
+                // ->setPseudo(mt_rand(0,1) === 1 ? $faker->firstName() : null)
+                ->setPseudo($faker->firstName())
+                ->setEmail($faker->email())
+                ->setRoles(['ROLE_USER'])
+                ->setPlainPassword('password');
+            $users[] = $user;
+            $manager->persist($user);
+        }
+
 
         // Ingrédients
         for ($i = 0; $i < 50; $i++) {
             $ingredient = new Ingredient();
             $ingredient->setName($faker->word())
-                        ->setPrice($faker->numberBetween(1, 100));
+                        ->setPrice($faker->numberBetween(1, 100))
+                        ->setUser($users[mt_rand(0, count($users) - 1)]);
+
             $ingredients[] = $ingredient;
             $manager->persist($ingredient);
         }
@@ -41,7 +58,8 @@ class AppFixtures extends Fixture
                     ->setDifficulty(mt_rand(0,1) == 1 ? mt_rand(1,5): null)
                     ->setProcess($faker->text(300))
                     ->setPrice(mt_rand(0,1) == 1 ? mt_rand(1,1000): null)
-                    ->setFavorites(mt_rand(0,1) == 1 ? true: false);
+                    ->setFavorites(mt_rand(0,1) == 1 ? true: false)
+                    ->setUser($users[mt_rand(0, count($users) - 1)]);
 
             for ($k=0; $k < mt_rand(5,15); $k++) {
                 $recipe->addIngredient($ingredients[mt_rand(0, count($ingredients) - 1)]);
@@ -49,19 +67,6 @@ class AppFixtures extends Fixture
             $manager->persist($recipe);
         }
 
-        // Users
-
-        for ($k=0; $k < 10 ; $k++) {
-            $user = new User();
-            $user->setFullName($faker->name())
-                // ->setPseudo(mt_rand(0,1) === 1 ? $faker->firstName() : null)
-                ->setPseudo($faker->firstName())
-                ->setEmail($faker->email())
-                ->setRoles(['ROLE_USER'])
-                ->setPlainPassword('password');
-
-            $manager->persist($user);
-        }
         $manager->flush();
     }
 }
