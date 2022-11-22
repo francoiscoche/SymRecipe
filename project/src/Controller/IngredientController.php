@@ -4,14 +4,16 @@ namespace App\Controller;
 
 use App\Entity\Ingredient;
 use App\Form\IngredientType;
-use App\Repository\IngredientRepository;
 use Doctrine\ORM\EntityManager;
+use App\Repository\IngredientRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Request;
 
 class IngredientController extends AbstractController
 {
@@ -25,6 +27,7 @@ class IngredientController extends AbstractController
      * @return Response
      */
     #[Route('/ingredient', name: 'app_ingredient', methods: ['GET'])]
+    #[IsGranted('ROLE_USER')]
     public function index(IngredientRepository $repository, PaginatorInterface $paginator, Request $request): Response
     {
         $query = $repository->findBy(['user' => $this->getUser()]);
@@ -47,6 +50,7 @@ class IngredientController extends AbstractController
      * @return Response
      */
     #[Route('ingredient/new', name:'app_new', methods: ['GET','POST'])]
+    #[IsGranted('ROLE_USER')]
     public function new(Request $request, EntityManagerInterface $manager): Response
     {
         $ingredient = new Ingredient();
@@ -79,6 +83,7 @@ class IngredientController extends AbstractController
      * @return Response
      */
     #[Route('/ingredient/edit/{id}', name:"app_edit", methods:['POST','GET'])]
+    #[Security("is_granted('ROLE_USER') and user === ingredient.getUser()")]
     public function edit(Ingredient $ingredient, EntityManagerInterface $manager, Request $request): Response
     {
         $form = $this->createForm(IngredientType::class, $ingredient);
