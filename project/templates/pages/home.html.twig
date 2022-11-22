@@ -10,6 +10,23 @@
         <p>It uses utility classes for typography and spacing to space content out within the larger container.</p>
         <a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a>
     </div>
-</div>
 
+
+<div class="recipes">
+    <h2 class="mt-4">Recette de la communauté</h2>
+
+<div class="d-flex justify-content-between flex-wrap">
+    {% for recette in recettes %}
+        <div class="card text-white bg-primary mb-3 mx-3" style="max-width: 20rem;">
+            <div class="card-header">Recette n{{ recette.id }}</div>
+            <div class="card-body">
+                <h4 class="card-title">{{ recette.name }}</h4>
+                <p class="card-text">{{ recette.process |slice(0,100) ~ '...'  }}</p>
+                <a href="{{ path("recette.show", { id : recette.id })}}" role="button" class="btn btn-info">La recette en détail</a>
+            </div>
+        </div>
+    {% endfor %}
+</div>
+</div>
+</div>
 {% endblock %}
