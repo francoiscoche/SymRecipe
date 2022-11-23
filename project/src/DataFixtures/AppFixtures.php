@@ -4,6 +4,7 @@ namespace App\DataFixtures;
 
 use Faker\Factory;
 use App\Entity\Ingredient;
+use App\Entity\Mark;
 use App\Entity\Recette;
 use App\Entity\User;
 use Doctrine\Persistence\ObjectManager;
@@ -22,6 +23,7 @@ class AppFixtures extends Fixture
         $faker = Factory::create('fr_FR');
         $ingredients = [];
         $users = [];
+        $recettes = [];
 
         // Users
         for ($k=0; $k < 10 ; $k++) {
@@ -65,8 +67,24 @@ class AppFixtures extends Fixture
             for ($k=0; $k < mt_rand(5,15); $k++) {
                 $recipe->addIngredient($ingredients[mt_rand(0, count($ingredients) - 1)]);
             }
+
+            $recettes[] = $recipe;
+            
             $manager->persist($recipe);
         }
+
+
+        // Mark
+        for ($i = 0; $i < 50; $i++) {
+            $mark = new Mark();
+
+            $mark->setMark(mt_rand(1,5))
+                ->setUser($users[mt_rand(0, count($users) - 1)])
+                ->setRecette($recettes[mt_rand(0, count($recettes) - 1)]);
+                
+            $manager->persist($mark);
+        }
+
 
         $manager->flush();
     }

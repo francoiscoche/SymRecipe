@@ -4,8 +4,22 @@
 
 {% block body %}
     <div class="container mt-4">
+        {% for message in app.flashes('success') %}
+            <div class="alert alert-success mt-4">
+                {{ message }}
+            </div>
+        {% endfor %}
+
+        {% for message in app.flashes('warning') %}
+            <div class="alert alert-warning mt-4">
+                {{ message }}
+            </div>
+        {% endfor %}
+
         <h1 class="mt-4">{{ recette.name }}</h1>
         <span class="badge bg-primary">Créer le {{ recette.createdAt | date('d/m/Y')}}</span>
+        {# <p>Note :  {{ mark | round(1, 'floor') }}/5</p> #}
+        <p>Note :  {{ recette.average | number_format(2, '.', ',')  }}/5</p>
         <div class="mt-4">
         {% if recette.time %}
             <p>Temps (en minutes) : {{ recette.time }}</p>
@@ -37,10 +51,14 @@
         <div class="mt-4">
             {{ recette.process | raw }}
         </div>
-        <p class="mt-4">Ingrédient</p>
-        {% for ingredient in recette.ingredients %}
-            <span class="badge bg-primary">{{ ingredient.name }}</span>
-        {% endfor %}
-
+        <div class="mt-4">
+        <p>Ingrédient</p>
+            {% for ingredient in recette.ingredients %}
+                <span class="badge bg-primary">{{ ingredient.name }}</span>
+            {% endfor %}
+        </div>
+        <div class="mark">
+            {{form(form)}}
+        </div>
     </div>
 {% endblock %}

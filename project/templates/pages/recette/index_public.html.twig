@@ -5,13 +5,17 @@
 {% block body %}
 
 <div class="container mt-4">
-    
+
 <div class="d-flex justify-content-center flex-wrap">
     {% for recette in recettes %}
+        <pre>
+        {{ dump(recette) }}
+    </pre>
         <div class="card text-white bg-primary mb-3 mx-3" style="max-width: 20rem;">
             <div class="card-header">Recette n{{ recette.id }}</div>
             <div class="card-body">
                 <h4 class="card-title">{{ recette.name }}</h4>
+                {# <p>Note : {{ }}/5</p> #}
                 <p class="card-text">{{ recette.process |slice(0,100) ~ '...'  }}</p>
                 <a href="{{ path("recette.show", { id : recette.id })}}" role="button" class="btn btn-info">La recette en détail</a>
             </div>
@@ -19,7 +23,9 @@
     {% endfor %}
 </div>
 
-
+        <div class="navigation d-flex justify-content-center mt-4">
+            {{ knp_pagination_render(recettes) }}
+        </div>
 
 </div>
 {% endblock %}

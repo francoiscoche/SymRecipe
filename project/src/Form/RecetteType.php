@@ -116,7 +116,21 @@ class RecetteType extends AbstractType
                 'attr' => [
                     'class' => 'form-check'
                 ],
+                'required' => false,
                 'label' => 'Ajouter en favoris',
+                'label_attr' => [
+                    'class' => 'form-label mt-4'
+                ],
+                'constraints' => [
+                    new Assert\NotNull(),
+                ]
+            ])
+            ->add('isPublic', CheckboxType::class, [
+                'attr' => [
+                    'class' => 'form-check'
+                ],
+                'required' => false,
+                'label' => 'Rendre la recette publique',
                 'label_attr' => [
                     'class' => 'form-label mt-4'
                 ],
