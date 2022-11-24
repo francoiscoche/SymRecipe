@@ -87,7 +87,7 @@ class Recette
     #[Vich\UploadableField(mapping: 'recette_images', fileNameProperty: 'imageName')]
     private ?File $imageFile = null;
 
-    #[ORM\Column(type: 'string')]
+    #[ORM\Column(type: 'string', nullable: true)]
     private ?string $imageName = null;
 
     public function __construct()
