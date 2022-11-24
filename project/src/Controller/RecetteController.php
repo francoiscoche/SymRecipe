@@ -112,6 +112,7 @@ class RecetteController extends AbstractController
 
         $form->handleRequest($request);
 
+        // dd($form->getData());
         if($form->isSubmitted() && $form->isValid())
         {
             $recette = $form->getData();
@@ -158,7 +159,7 @@ class RecetteController extends AbstractController
      * @param Recette $recette
      * @return Response
      */
-    #[Security("is_granted('ROLE_USER') and recette.getIsPublic() === true")]
+    #[Security("is_granted('ROLE_USER') and (recette.getIsPublic() === true || user === recette.getUser())")]
     #[Route('/recette/{id}', name:'recette.show', methods: ['GET', 'POST'])]
     public function show(MarkRepository $repository, Recette $recette, Request $request, EntityManagerInterface $manager) : Response
     {

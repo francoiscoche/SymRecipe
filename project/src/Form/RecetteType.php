@@ -17,6 +17,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
+use Vich\UploaderBundle\Form\Type\VichImageType;
 
 class RecetteType extends AbstractType
 {
@@ -165,6 +166,13 @@ class RecetteType extends AbstractType
             //         'class' => 'form-label mt-4'
             //     ],
             // ])
+            ->add('imageFile', VichImageType::class, [
+                'label' => 'Image de la recette',
+                'label_attr' => [
+                    'class' => 'form-label mt-4'
+                ],
+                'required' => false
+            ])
 
             ->add('submit', SubmitType::class, [
                 'attr' => [

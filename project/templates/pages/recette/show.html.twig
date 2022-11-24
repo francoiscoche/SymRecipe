@@ -15,9 +15,11 @@
                 {{ message }}
             </div>
         {% endfor %}
-
         <h1 class="mt-4">{{ recette.name }}</h1>
-        <span class="badge bg-primary">Créer le {{ recette.createdAt | date('d/m/Y')}}</span>
+        <div class="recette_image mt-4">
+            <img style="max-width:500px" src="{{ vich_uploader_asset(recette, 'imageFile') }}">
+        </div>
+        <span class="badge bg-primary mt-4">Créer le {{ recette.createdAt | date('d/m/Y')}}</span>
         {# <p>Note :  {{ mark | round(1, 'floor') }}/5</p> #}
         <p>Note :  {{ recette.average | number_format(2, '.', ',')  }}/5</p>
         <div class="mt-4">

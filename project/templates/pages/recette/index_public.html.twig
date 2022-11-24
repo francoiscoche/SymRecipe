@@ -8,9 +8,6 @@
 
 <div class="d-flex justify-content-center flex-wrap">
     {% for recette in recettes %}
-        <pre>
-        {{ dump(recette) }}
-    </pre>
         <div class="card text-white bg-primary mb-3 mx-3" style="max-width: 20rem;">
             <div class="card-header">Recette n{{ recette.id }}</div>
             <div class="card-body">

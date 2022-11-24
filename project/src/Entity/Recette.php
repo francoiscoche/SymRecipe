@@ -10,9 +10,14 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
+use Symfony\Component\HttpFoundation\File\File;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
+
+
 #[ORM\Entity(repositoryClass: RecetteRepository::class)]
 #[UniqueEntity('name')]
 #[ORM\HasLifecycleCallbacks]
+#[Vich\Uploadable]
 class Recette
 {
     #[ORM\Id]
@@ -71,12 +76,19 @@ class Recette
     private ?User $user = null;
 
     #[ORM\Column]
-    private ?bool $isPublic = null;
+    private ?bool $isPublic = false;
 
     #[ORM\OneToMany(mappedBy: 'recette', targetEntity: Mark::class, orphanRemoval: true)]
     private Collection $marks;
 
     private ?float $average = null;
+
+    // NOTE: This is not a mapped field of entity metadata, just a simple property.
+    #[Vich\UploadableField(mapping: 'recette_images', fileNameProperty: 'imageName')]
+    private ?File $imageFile = null;
+
+    #[ORM\Column(type: 'string')]
+    private ?string $imageName = null;
 
     public function __construct()
     {
@@ -313,5 +325,31 @@ class Recette
         $this->average = $total / count($marks);
 
         return $this->average;
+    }
+
+    public function setImageFile(?File $imageFile = null): void
+    {
+        $this->imageFile = $imageFile;
+
+        if (null !== $imageFile) {
+            // It is required that at least one field changes if you are using doctrine
+            // otherwise the event listeners won't be called and the file is lost
+            $this->UpdatedAt = new \DateTimeImmutable();
+        }
+    }
+
+    public function getImageFile(): ?File
+    {
+        return $this->imageFile;
+    }
+
+    public function setImageName(?string $imageName): void
+    {
+        $this->imageName = $imageName;
+    }
+
+    public function getImageName(): ?string
+    {
+        return $this->imageName;
     }
 }
