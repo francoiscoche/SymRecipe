@@ -1,18 +1,22 @@
-# blog-symfony
-Blog app with Symfony and Docker. Made to learn.
+# SymRecipe
+App did with Symfony and Docker. Made to learn.
+
+Inspiration from [@Emilien.Gts](https://gitlab.com/Emilien.Gts) [tutorial](https://youtu.be/3K6oBiQK8aA)
+
+<br>
 
 <!-- implentation de fixtures and fakerPHP -->
 - Integration of [DoctrineFixturesBundle](https://symfony.com/bundles/DoctrineFixturesBundle/current/index.html) and [FakePHP](https://fakerphp.github.io/) for generating false test data.
 - Integration of [KnpPaginatorBundle](https://github.com/KnpLabs/KnpPaginatorBundle) to use a pagination system.
-
+- Integration of [VichUploaderBundle](https://github.com/dustin10/VichUploaderBundle) to manage uploading pictures
 
 *Developpement in progress ...*
 
-
+<br>
 
 ## Run localy the project
 
-&nbsp;
+<br>
 
 Clone the project
 
