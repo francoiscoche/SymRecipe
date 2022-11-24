@@ -4,18 +4,18 @@ namespace App\Controller;
 
 use App\Entity\Contact;
 use App\Form\ContactType;
+use App\Service\MailService;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Mailer\MailerInterface;
+
 
 class ContactController extends AbstractController
 {
     #[Route('/contact', name: 'app_contact', methods:['POST', 'GET'])]
-    public function index(EntityManagerInterface $manager, Request $request, MailerInterface $mailer): Response
+    public function index(EntityManagerInterface $manager, Request $request, MailService $mailService): Response
     {
         $contact = new Contact();
         
@@ -31,21 +31,16 @@ class ContactController extends AbstractController
         {
             $contact = $form->getData();
             $manager->persist($contact);
-            $manager->flush();
 
-
+            
             // Email
-            $email = (new TemplatedEmail())
-            ->from($contact->getEmail())
-            ->to('admin@symrecipe.com')
-            ->subject($contact->getSubject())
-            ->htmlTemplate('emails/contact.html.twig')
-            ->context([
-                'contact' => $contact
-            ]);
-            // ->text($contact->getMessage())
-    
-            $mailer->send($email);
+            $mailService->sendMail(
+                $contact->getEmail(),
+                $contact->getSubject(),
+                'emails/contact.html.twig',
+                ['contact' => $contact]
+            );
+
 
             $this->addFlash(
                 'success',

@@ -49,7 +49,16 @@ Start the server
 ```bash
 symfony serve -d
 ```
+
+Create the database or update tables
+```bash
+symfony console doctrine:database:create
+symfony console make:migration
+syngony console doctrine:migration:migrations
+```
+
 *The application is available at http://127.0.0.1:9000*
+
 
 
 Create fixtures
@@ -57,7 +66,22 @@ Create fixtures
 php bin/console doctrine:fixtures:load
 ```
 
-### Author
+Captch v3 configuration (form contact page)
+
+Generate private keys : https://www.google.com/recaptcha/admin/create 
+- reCAPTCHA version 3
+- Domains : localhost
+
+Add the key in .env file
+```bash
+RECAPTCHA3_KEY=
+RECAPTCHA3_SECRET=
+```
+
+<br>
+
+
+## Author
 
 From a [Tuto](https://youtu.be/3K6oBiQK8aA) by [@Emilien.Gts](https://gitlab.com/Emilien.Gts)
 
