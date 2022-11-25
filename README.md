@@ -17,7 +17,7 @@ Inspiration from [@Emilien.Gts](https://gitlab.com/Emilien.Gts) [tutorial](https
 
 <br>
 
-## Run localy the project
+## Configure and run localy the project
 
 <br>
 
@@ -79,9 +79,18 @@ Add the key in .env file
 RECAPTCHA3_KEY=
 RECAPTCHA3_SECRET=
 ```
-
 <br>
 
+## Unit and functional tests
+
+Test files are located in project/tests.
+To run it :
+```bash
+php bin/phpunit --testdox tests/Unit/
+php bin/phpunit --testdox tests/Functionnal/
+```
+
+<br>
 
 ## Author
 
