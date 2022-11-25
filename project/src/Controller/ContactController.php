@@ -34,12 +34,12 @@ class ContactController extends AbstractController
 
             
             // Email
-            $mailService->sendMail(
-                $contact->getEmail(),
-                $contact->getSubject(),
-                'emails/contact.html.twig',
-                ['contact' => $contact]
-            );
+            // $mailService->sendMail(
+            //     $contact->getEmail(),
+            //     $contact->getSubject(),
+            //     'emails/contact.html.twig',
+            //     ['contact' => $contact]
+            // );
 
 
             $this->addFlash(
