@@ -4,7 +4,10 @@ FROM php
 RUN apt-get update \
     &&  apt-get install -y --no-install-recommends \
         locales apt-utils git libicu-dev g++ libpng-dev libxml2-dev libzip-dev libonig-dev libxslt-dev unzip libpq-dev nodejs npm wget \
-        apt-transport-https lsb-release ca-certificates
+        apt-transport-https lsb-release ca-certificates \
+        && docker-php-ext-configure intl \
+        && docker-php-ext-install intl \
+        && docker-php-ext-install zip 
 
 # Install Composer
 RUN curl -sS https://getcomposer.org/installer | php -- \

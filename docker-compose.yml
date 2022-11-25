@@ -35,5 +35,10 @@ services:
       PMA_HOST: db
     networks:
       - dev
+
+  mailer:
+    image: schickling/mailcatcher
+    ports: [1025, 1080]
+
 networks:
   dev:
